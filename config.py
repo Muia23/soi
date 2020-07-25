@@ -2,7 +2,9 @@ import os
 
 class Config:
 
-    SECRET_KEY ='secret'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    SECRET_KEY = 'secret'
 
     @staticmethod
     def init_app(app):
@@ -13,6 +15,7 @@ class ProdConfig(Config):
 
 
 class DevConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://willy:willy@localhost/blog'
     DEBUG = True
 
 config_options = {
