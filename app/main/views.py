@@ -1,4 +1,4 @@
-from flask import render_template,request,redirect,url_for
+from flask import Flask,render_template,request,redirect,url_for
 from . import main
 from ..models import Blog
 from .forms import BlogForm
@@ -11,7 +11,7 @@ def index():
     '''
     title = 'Soi | Where you express yourself'
     blogs = Blog.get_blogs('blog')
-    return render_template('index.html', title = title, blogs = blogs)
+    return render_template('index.html', title = title)
 
 @main.route('/create-blog', methods = ['GET','POST'])
 @login_required
