@@ -2,6 +2,7 @@ from flask import render_template,request,redirect,url_for
 from . import main
 from ..models import Blog
 from .forms import BlogForm
+from flask_login import login_required
 
 @main.route('/')
 def index():
@@ -13,6 +14,7 @@ def index():
     return render_template('index.html', title = title, blogs = blogs)
 
 @main.route('/create-blog', methods = ['GET','POST'])
+@login_required
 def new_blog():
     blog_form = BlogForm()
 
