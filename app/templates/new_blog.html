@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>New Blog</title>        
-    </head>
-    <body>
-        <div class="row"></div>
-        <div class="row">
+{% extends 'base.html'%}
+{% import "bootstrap/wtf.html" as wtf %}
+    {%block content %}
 
-            <div class="container">
-                {{ wtf.quick_form(blog_form) }}
-            </div>
-        </div>
-        <div class="row">            
-        </div>
-    </body>
-</html>
+    <div class="container">
+        {{ wtf.quick_form(blog_form) }}
+    </div>
+
+    {% endblock %}
+                    
