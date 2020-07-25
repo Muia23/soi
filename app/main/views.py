@@ -9,14 +9,15 @@ def index():
     View root page function returning index page
     '''
     title = 'Soi | Where you express yourself'
-    
-    return render_template('index.html', title = title)
+    blogs = Blog.get_blogs('blog')
+    return render_template('index.html', title = title, blogs = blogs)
 
 @main.route('/create-blog', methods = ['GET','POST'])
 def new_blog():
     blog_form = BlogForm()
 
     if blog_form.validate_on_submit():
+        id = 'blog'
         title = blog_form.title.data
         content = blog_form.content.data
 
