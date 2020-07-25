@@ -18,21 +18,17 @@ class Blog(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     def save_blog(self):
-        Blog.blog_list.append(self)
+        db.session.add(self):
+        dd.session.commit()
 
     @classmethod
     def clear_blogs(cls):
         Blog.blog_list.clear()
 
     @classmethod
-    def get_blogs(cls,id):
-
-        response = []
-
-        for blog in cls.blog_list:
-            if blog.id == id:
-                response.append(blog)
-        return response
+    def get_blogs(cls):
+        blogs = Blog.query.all()
+        return blogs
 
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
@@ -42,7 +38,7 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(255),unique = True,index = True)
     pass_secure = db.Column(db.String(255))
     blogs = db.relationship('Blog', backref = 'user', lazy= "dynamic")
-    
+
     @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
