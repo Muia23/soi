@@ -13,4 +13,12 @@ class Blog:
     def clear_blogs(cls):
         Blog.blog_list.clear()
 
-    
+    @classmethod
+    def get_blogs(cls,id):
+
+        response = []
+
+        for blog in cls.blog_list:
+            if blog.id == id:
+                response.append(blog)
+        return response
