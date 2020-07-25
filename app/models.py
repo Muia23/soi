@@ -2,19 +2,20 @@ from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from . import  login_manager
+from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class Blog:
-
-    blog_list = []
-
-    def __init__(self,id,title,content):
-        self.id = id
-        self.title = title
-        self.content = content
+class Blog(db.Model):
+    
+    __tablename__ = 'blogs'
+   
+    id = db.Column(db.Integer,primary_key = True)
+    title = db.Column(db.String)
+    content = db.Column(db.String)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     def save_blog(self):
         Blog.blog_list.append(self)
@@ -40,6 +41,8 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(255), index = True)
     email = db.Column(db.String(255),unique = True,index = True)
     pass_secure = db.Column(db.String(255))
+    blogs = db.relationship('Blog', backref = 'user', lazy= "dynamic")
+    
     @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
