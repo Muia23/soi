@@ -2,6 +2,7 @@ import os
 
 class Config:
     
+    RANDOM_QUOTE_URL = 'http://quotes.stormconsultancy.co.uk/random.json'
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://willy:willy@localhost/blog'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
