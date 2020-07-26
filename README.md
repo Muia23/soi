@@ -3,7 +3,7 @@
  [muia23](https://github.com/Muia23)
 
 ## Project description
-This is Python application for bloggers to create the own community of readers. No need to depend on paid domanins, when you can actually host a webapp.
+This is a Python application for bloggers to create their own community of readers. No need to depend on paid domains, when you can actually host a webapp.
 
 ## Project setup instruction
 To get the entire program: 
