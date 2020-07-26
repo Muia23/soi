@@ -18,16 +18,20 @@ class Blog(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     def save_blog(self):
-        db.session.add(self):
-        dd.session.commit()
+        db.session.add(self)
+        db.session.commit()
 
     @classmethod
     def clear_blogs(cls):
         Blog.blog_list.clear()
 
     @classmethod
-    def get_blogs(cls):
+    def get_all_blogs(cls):
         blogs = Blog.query.all()
+        return blogs
+
+    def get_specific_blog(cls,id):
+        blogs = Blog.query.filter_by(id=id).all()
         return blogs
 
 class User(UserMixin,db.Model):
@@ -53,3 +57,12 @@ class User(UserMixin,db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
+
+class Quote:
+    '''
+    Quote class to define Quote Objects
+    '''
+
+    def __init__(self,author, quote):
+        self.author = author
+        self.quote = quote
