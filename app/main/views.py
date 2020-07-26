@@ -1,8 +1,10 @@
 from flask import Flask,render_template,request,redirect,url_for
 from . import main
-from ..models import Blog
+from ..models import Blog, Quote
 from .forms import BlogForm
-from flask_login import login_required
+from flask_login import login_required, current_user
+from ..requests import get_quote
+
 
 @main.route('/')
 def index():
@@ -10,8 +12,9 @@ def index():
     View root page function returning index page
     '''
     title = 'Soi | Where you express yourself'
-    blogs = Blog.get_blogs('blog')
-    return render_template('index.html', title = title)
+    blogs = Blog.get_all_blogs()
+    quotes = get_quote()
+    return render_template('index.html', title = title, blogs = blogs, quotes = quotes)
 
 @main.route('/create-blog', methods = ['GET','POST'])
 @login_required
@@ -23,7 +26,7 @@ def new_blog():
         title = blog_form.title.data
         content = blog_form.content.data
 
-        new_blog = Blog(id = id, title = title, content = content)
+        new_blog = Blog( title = title, content = content, user = current_user)
 
         new_blog.save_blog()
         return redirect(url_for('main.index'))
