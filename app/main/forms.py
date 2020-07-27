@@ -16,3 +16,7 @@ class SubscribeForm(FlaskForm):
     email = StringField('Your Email Address', validators = [Required()])
     subscribe = BooleanField('I choose to subscibe to new post Alert!')
     submit = SubmitField('Submit')
+
+class UpdateBio(FlaskForm):
+    bio = TextAreaField('Say something about you.', validators = [Required()])
+    submit = SubmitField('Submit')
