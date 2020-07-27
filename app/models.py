@@ -16,14 +16,16 @@ class Blog(db.Model):
     title = db.Column(db.String)
     content = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    comments = db.relationship('Comment', backref = 'blog', lazy= "dynamic")
 
     def save_blog(self):
         db.session.add(self)
         db.session.commit()
 
     @classmethod
-    def clear_blogs(cls):
-        Blog.blog_list.clear()
+    def clear_blog(cls):
+        db.session.delete(self)
+        db.session.commit()
 
     @classmethod
     def get_all_blogs(cls):
@@ -66,3 +68,22 @@ class Quote:
     def __init__(self,author, quote):
         self.author = author
         self.quote = quote
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+   
+    id = db.Column(db.Integer,primary_key = True)    
+    comment = db.Column(db.String)
+    name = db.Column(db.String)
+    blog_id = db.Column(db.Integer, db.ForeignKey("blogs.id"))
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+    @classmethod
+    def get_comments(cls):
+        comments = Comment.query.all()
+        return comments
+
