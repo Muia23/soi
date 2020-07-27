@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField,SubmitField
+from wtforms import StringField, TextAreaField,SubmitField,BooleanField
 from wtforms.validators import Required
 
 class BlogForm(FlaskForm):
@@ -10,4 +10,9 @@ class BlogForm(FlaskForm):
 class CommentForm(FlaskForm):    
     comment = TextAreaField('Comment:', validators=[Required()])
     name = StringField('Name:')
+    submit = SubmitField('Submit')
+
+class SubscribeForm(FlaskForm):    
+    email = StringField('Your Email Address', validators = [Required()])
+    subscribe = BooleanField('I choose to subscibe to new post Alert!')
     submit = SubmitField('Submit')
