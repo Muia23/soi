@@ -4,20 +4,18 @@ class Config:
     
     RANDOM_QUOTE_URL = 'http://quotes.stormconsultancy.co.uk/random.json'
     
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://willy:willy@localhost/blog'
-    
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     UPLOADED_PHOTOS_DEST ='app/static/photos'
 
-    SECRET_KEY = 'secret'
+    SECRET_KEY = os.environ.get("SECRET_KEY")
 
     @staticmethod
     def init_app(app):
         pass
 
 class ProdConfig(Config):
-    pass
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
 
 class DevConfig(Config):
