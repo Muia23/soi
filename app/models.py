@@ -81,9 +81,22 @@ class Comment(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
+    def clear_comment(cls):
+        db.session.delete(self)
+        db.session.commit()
 
     @classmethod
     def get_comments(cls):
         comments = Comment.query.all()
         return comments
 
+class Subscriber(db.Model):
+    __tablename__ = 'subscribers'
+
+    id = db.Column(db.Integer, primary_key = True)
+    email = db.Column(db.String)
+
+    def save_subscriber(self):
+        db.session.add(self)
+        db.session.commit()
