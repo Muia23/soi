@@ -1,7 +1,7 @@
 from flask import Flask,render_template,request,redirect,url_for
 from . import main
-from ..models import Blog, Quote
-from .forms import BlogForm
+from ..models import Blog, Quote, Comment
+from .forms import BlogForm, CommentForm
 from flask_login import login_required, current_user
 from ..requests import get_quote
 
@@ -13,8 +13,8 @@ def index():
     '''
     title = 'Soi | Where you express yourself'
     blogs = Blog.get_all_blogs()
-    quotes = get_quote()
-    return render_template('index.html', title = title, blogs = blogs, quotes = quotes)
+    #quotes = get_quote()
+    return render_template('index.html', title = title, blogs = blogs)#, quotes = quotes)
 
 @main.route('/create-blog', methods = ['GET','POST'])
 @login_required
@@ -33,3 +33,21 @@ def new_blog():
     
     title = 'New Blog'
     return render_template('new_blog.html', title = title, blog_form = blog_form)
+
+@main.route('/comment', methods = ['GET','POST'])
+def new_comment():
+    comment_form = CommentForm()
+
+    if comment_form.validate_on_submit():
+        comment = comment_form.comment.data
+        name = comment_form.name.data
+
+        new_comment = Comment(comment = comment, name = name)
+
+        new_comment.save_comment()
+        return redirect(url_for('main.comment'))    
+
+
+    comments = Comment.get_comments()
+    title = 'Comments'
+    return render_template('comment.html', title = title, comment_form = comment_form, comments = comments)
