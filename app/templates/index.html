@@ -11,17 +11,12 @@
                         <div class="card-body">
                             <h3 style="color:#0567a8cc;">{{blog.title}} <span><button type="button" class="btn btn-secondary btn-sm" style="float: right;">@{{blog.user.username}}</button></span></h3>
                             <p style="padding: 25px;">{{blog.content}}</p>                          
-                            <hr>                        
-                            <h5 style="display: inline; padding-left: 4vw;"> 4 Likes</h5>
-                            <h5 style="display: inline; padding-left: 16vw;">2 comments</h5>
+                            <hr>                                                
+                            <h5 style="display: inline; padding-left: 16vw;"><a href="/comment">comments</a></h5>
                         </div>
                     </div>
                     {% endfor %}
-                </div>
-                <div class="col-md-4">                 
-                    <p style="color: black;">{{quotes.quote}}</p>                    
-                    <p style="color: black;">{{quotes.author}}</p>
-                </div>
+                </div>                
             </div>            
         </div>            
     </div>
