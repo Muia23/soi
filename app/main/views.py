@@ -1,10 +1,10 @@
 from flask import Flask,render_template,request,redirect,url_for
 from . import main
-from ..models import Blog, Quote, Comment, Subscriber
-from .forms import BlogForm, CommentForm, SubscribeForm
+from ..models import User, Blog, Quote, Comment, Subscriber
+from .forms import BlogForm, CommentForm, SubscribeForm, UpdateBio
 from flask_login import login_required, current_user
 from ..requests import get_quote
-
+from .. import db #photos
 
 @main.route('/')
 def index():
@@ -15,6 +15,33 @@ def index():
     blogs = Blog.get_all_blogs()
     quotes = get_quote()
     return render_template('index.html', title = title, blogs = blogs, quotes = quotes)
+
+@main.route('/user/<uname>', methods = ['GET','POST'])
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
+
+    if user is None:
+        abort(404)
+
+    form_bio = UpdateBio()
+
+    if form_bio.validate_on_submit():
+        user.bio = form_bio.bio.data
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('main.profile',uname=user.username))
+
+    #if 'photo' in requestfiles:
+    #    filename = photos.save(request.files['photo'])
+    #    path = f'photos/{filename}'
+    #    user.profile_pic_path = path
+    #    db.session.commit()
+    #return redirect(url_for('main.profile',uname=user.username))
+
+    
+    return render_template("profile/profile.html", user = user, form_bio = form_bio)
 
 @main.route('/create-blog', methods = ['GET','POST'])
 @login_required
