@@ -18,8 +18,9 @@
       </div>
       <div class="col">    
         {% if current_user.is_authenticated %}
-        <br><br><br>
+        <br><br>
           <h2 style="color:white; text-align: right;">{{current_user.username}}</h2>        
+          <h5 style="text-align: right;"><a href="{{url_for('main.profile',uname=current_user.username)}}" style="color: black;">Profile</a></h5>
           <h5 style="text-align: right;"><a href="{{url_for('auth.logout')}}" style="color: black;">Sign out</a></h5>
           {% else %}
           <br><br>
