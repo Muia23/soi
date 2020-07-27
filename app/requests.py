@@ -21,7 +21,7 @@ def get_quote():
             author = quote_result.get('author')
             quote = quote_result.get('quote')
 
-            quotr_object = Quote(author,quote)
+            quote_object = Quote(author,quote)
     
     return quote_object
         
